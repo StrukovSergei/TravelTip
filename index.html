@@ -14,7 +14,7 @@
         <div class="logo">Travel<span class="colored-txt">Tip</span></div>
         <form class="search-location" onsubmit="onGoTo(event)">
             <input type="text" class="search-input" placeholder="Enter location...">
-            <button class="search-btn"><i class="fa fa-search"></i></button>
+            <button onclick="onSearch()" class="search-btn"><i class="fa fa-search"></i></button>
         </form>
     </header>
     
@@ -43,10 +43,24 @@
         <div class="map" id="map"></div>
     
         <section class="locations-table">
+            <section class="locations-table">
+                <table class="places-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody class="places-table-body">
+                    </tbody>
+                </table>
+            </section>
             <button onclick="onAddMarker()" class="btn-location btn-add-marker">Add Marker Speific Location</button>
             <button onclick="onGetUserPos()" class="btn-location btn-user-pos">Get User Position</button>
             <button onclick="onGetLocs()" class="btn-location btn-get-locs">Get Locations</button>
             <button onclick="onPanTo()" class="btn-location btn-pan">Pan Map to Tokyo</button>
+            <button onclick="onCopyLink()" class="btn-location btn-pan">Copy Link</button>
         </section>
     
         <p>Locations:

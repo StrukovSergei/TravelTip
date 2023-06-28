@@ -8,9 +8,11 @@ window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onMapClick = onMapClick
+window.onSearch = onSearch
+window.onCopyLink = onCopyLink
 
 function onInit() {
-    
+    onGetLocs()
 
     mapService.initMap()
         .then(() => {
@@ -45,7 +47,10 @@ function onGetLocs() {
     locService.getLocs()
         .then(locs => {
             console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
+            renderPlacesTable(locs)
+        })
+        .catch(err => {
+            console.log('err!!!', err)
         })
 }
 
@@ -74,3 +79,66 @@ function onMapClick(event) {
 
     mapService.addMarker(clickedLocation)
 }
+
+function renderPlacesTable(locs) {
+    const tableBody = document.querySelector('.places-table-body');
+
+    tableBody.innerHTML = ''
+
+    locs.forEach(loc => {
+        const row = document.createElement('tr')
+        row.innerHTML = `
+            <td>${loc.name}</td>
+            <td>${loc.lat}</td>
+            <td>${loc.lng}</td>
+            <td>
+                <button class="btn-go" data-lat="${loc.lat}" data-lng="${loc.lng}">Go</button>
+                <button class="btn-delete" data-id="${loc.id}">Delete</button>
+            </td>
+        `
+        tableBody.appendChild(row)
+    })
+    const goButtons = document.getElementsByClassName('btn-go')
+    // const deleteButtons = document.getElementsByClassName('btn-delete')
+
+    for (let i = 0; i < goButtons.length; i++) {
+        goButtons[i].addEventListener('click', onGoButtonClick)
+    }
+
+    // for (let i = 0; i < deleteButtons.length; i++) {
+    //     deleteButtons[i].addEventListener('click', onDeleteButtonClick)
+    // }
+}
+
+function onGoButtonClick(event) {
+    console.log(event)
+    const lat = event.target.dataset.lat
+    const lng = event.target.dataset.lng
+    mapService.panTo(lat, lng)
+    mapService.addMarker({ lat: lat, lng: lng })
+    weatherService.fetch(lat, lng)
+
+}
+
+
+function onSearch() {
+    const address = document.querySelector('.search-input').value
+    mapService.onSearchLocation(address)
+}
+
+function onCopyLink() {
+
+    const lat = mapService.getCurrentLocation().lat
+    const lng = mapService.getCurrentLocation().lng
+    console.log(lat)
+    const urlParams = new URLSearchParams({ lat, lng })
+    const url = `https://strukovsergei.github.io/TravelTip/?${urlParams.toString()}`
+
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        console.log('Link copied to clipboard:', url)
+      })
+      .catch(err => {
+        console.log('Error copying link to clipboard:', err)
+      })
+  }
