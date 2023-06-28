@@ -8,8 +8,8 @@ window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onMapClick = onMapClick
-window.onSearchButtonClick = onSearchButtonClick
-window.onCopyLinkButtonClick = onCopyLinkButtonClick
+window.onSearch = onSearch
+window.onCopyLink = onCopyLink
 
 function onInit() {
     onGetLocs()
@@ -121,12 +121,12 @@ function onGoButtonClick(event) {
 }
 
 
-function onSearchButtonClick() {
+function onSearch() {
     const address = document.querySelector('.search-input').value
     mapService.onSearchLocation(address)
 }
 
-function onCopyLinkButtonClick() {
+function onCopyLink() {
 
     const lat = mapService.getCurrentLocation().lat
     const lng = mapService.getCurrentLocation().lng
