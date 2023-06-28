@@ -1,4 +1,17 @@
-body {
+/* SETUP */
+@import url('setup/variables.css');
+
+/* BASICS */
+@import url('basics/base.css');
+@import url('basics/helpers.css');
+@import url('basics/layout.css');
+
+/* COMPONENTS */
+@import url('components/main-header.css');
+@import url('components/location-section.css');
+@import url('components/main-content.css');
+
+/* body {
     display: grid;
     background-color: #f68658;
     grid-template-columns: 1fr 1.5fr;
@@ -11,36 +24,25 @@ body {
     gap: 20px;
 }
 
-.header {
+.main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
     grid-area: header;
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
-    margin-right: 300px;
 }
 
-.search-input {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.search-button {
-    padding: 10px 20px;
+.search-btn {
     background-color: darkgrey;
     color: white;
     cursor: pointer;
 }
 
-.my-location-button {
+.my-location-btn {
     padding: 10px 20px;
     background-color: darkgrey;
     border: none;
@@ -49,7 +51,6 @@ body {
 }
 
 .location-section {
-    padding: 20px;
     grid-area: semi-header;
     display: flex;
     justify-content: space-between;
@@ -58,41 +59,29 @@ body {
 
 .current-location {
     font-size: 30px;
-    margin-bottom: 10px;
     font-weight: bolder;
 }
 
 .copy-location-button {
-    padding: 10px 20px;
     background-color: darkgrey;
     border: none;
     color: white;
     cursor: pointer;
 }
 
-
 .weather-container {
-    padding: 20px;
-    grid-area: weather;
     border: 1px solid black;
     display: flex;
     align-items: center;
     gap: 100px;
 }
 
-.weather-info {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
 .locations-table{
     grid-area: location;
     border: 1px solid black;
-
 }
 
 .btn-location{
-    padding: 10px 20px;
     background-color: darkgrey;
     border: none;
     color: white;
@@ -102,7 +91,6 @@ body {
 .map {
     grid-area: map;
     border: 1px solid black;
-
 }
 
 .weather-description,
@@ -110,6 +98,5 @@ body {
 .humidity{
     font-size: 17px;
     color: white;
-    font-weight: bolder;
-
-}
+    font-weight: bold;
+} */
