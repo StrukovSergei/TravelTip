@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Collabortion check -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>TravelTip</title>
 </head>
 
-<body>
-    <header class="header">
-        <div class="logo">
-            <h1>TravelTip</h1>
-        </div>
-        <div class="search-location">
+<body class="main-layout">
+    <header class="main-header main-layout full">
+        <div class="logo">Travel<span class="colored-txt">Tip</span></div>
+        <form class="search-location" onsubmit="onGoTo(event)">
             <input type="text" class="search-input" placeholder="Enter location...">
-            <button class="search-button">GO</button>
-        </div>
-        <button class="my-location-button">My Location</button>
+            <button class="search-btn"><i class="fa fa-search"></i></button>
+        </form>
     </header>
-
-    <section class="location-section">
-        <div class="current-location">
-            Location: <span class="current-location"></span>
+    
+    <section class="location-section main-layout full">
+        <h2>Location: <span class="current-location"></span></h2>
+        <div class="btns-location">
+            <button class="copy-location-button">Copy Location</button>
+            <button class="my-location-btn">My Location</button>
         </div>
-        <button class="copy-location-button">Copy Location</button>
     </section>
 
-    <div class="weather-container">
-        <div class="weather-info">
-            Weather: <span class="weather-description"></span>
-        </div>
-        <div class="weather-info">
-            Temperature: <span class="temperature"></span>&deg;C
-        </div>
-        <div class="weather-info">
-            Humidity: <span class="humidity"></span>%
-        </div>
-    </div>
+    <main class="main-content">
 
-    <div class="map" id="map" style="width: 100%; height: 400px;"></div>
+        <div class="weather-container">
+            <div class="weather-info">
+                Weather: <span class="weather-description"></span>
+            </div>
+            <div class="weather-info">
+                Temperature: <span class="temperature"></span>&deg;C
+            </div>
+            <div class="weather-info">
+                Humidity: <span class="humidity"></span>%
+            </div>
+        </div>
+    
+        <div class="map" id="map" style="width: 100%; height: 400px;"></div>
+    
+        <section class="locations-table">
+            <button onclick="onAddMarker()" class="btn-location btn-add-marker">Add Marker Speific Location</button>
+            <button onclick="onGetUserPos()" class="btn-location btn-user-pos">Get User Position</button>
+            <button onclick="onGetLocs()" class="btn-location btn-get-locs">Get Locations</button>
+            <button onclick="onPanTo()" class="btn-location btn-pan">Pan Map to Tokyo</button>
+        </section>
+    
+        <p>Locations:
+        <pre class="locs"></pre>
+        </p>
+    </main>
 
-    <section class="locations-table">
-        <button onclick="onAddMarker()" class="btn-location btn-add-marker">Add Marker Speific Location</button>
-        <button onclick="onGetUserPos()" class="btn-location btn-user-pos">Get User Position</button>
-        <button onclick="onGetLocs()" class="btn-location btn-get-locs">Get Locations</button>
-        <button onclick="onPanTo()" class="btn-location btn-pan">Pan Map to Tokyo</button>
-    </section>
-
-    <p>Locations:
-    <pre class="locs"></pre>
-    </p>
 
 
     <script type="module" src="js/app.controller.js"></script>
