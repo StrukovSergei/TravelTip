@@ -7,14 +7,25 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onMapClick = onMapClick
 
 function onInit() {
+    
+
     mapService.initMap()
         .then(() => {
             console.log('Map is ready')
         })
         .catch(() => console.log('Error: cannot init map'))
 
+
+    weatherService.fetch()
+        .then(weatherData => {
+            weatherService.update(weatherData)
+        })
+        .catch(error => {
+            console.log('Error fetching weather data:', error)
+        })
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -52,4 +63,14 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map')
     mapService.panTo(35.6895, 139.6917)
+}
+
+function onMapClick(event) {
+    console.log(event)
+    const clickedLocation = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+    }
+
+    mapService.addMarker(clickedLocation)
 }
