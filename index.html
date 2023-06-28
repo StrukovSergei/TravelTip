@@ -15,7 +15,7 @@
         </div>
         <div class="search-location">
             <input type="text" class="search-input" placeholder="Enter location...">
-            <button class="search-button">GO</button>
+            <button onclick="onSearchButtonClick()" class="search-button">GO</button>
         </div>
         <button class="my-location-button">My Location</button>
     </header>
@@ -42,11 +42,24 @@
     <div class="map" id="map" style="width: 100%; height: 400px;"></div>
 
     <section class="locations-table">
+        <table class="places-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody class="places-table-body">
+            </tbody>
+        </table>
+    </section>
         <button onclick="onAddMarker()" class="btn-location btn-add-marker">Add Marker Speific Location</button>
         <button onclick="onGetUserPos()" class="btn-location btn-user-pos">Get User Position</button>
         <button onclick="onGetLocs()" class="btn-location btn-get-locs">Get Locations</button>
         <button onclick="onPanTo()" class="btn-location btn-pan">Pan Map to Tokyo</button>
-    </section>
+        <button onclick="onCopyLinkButtonClick()" class="btn-copy-link">Copy Link</button>
+
 
     <p>Locations:
     <pre class="locs"></pre>
