@@ -7,7 +7,8 @@
     justify-content: space-between;
 }
 
-.flex.align-center {
+.flex.center {
+    justify-content: center;
     align-items: center;
 }
 

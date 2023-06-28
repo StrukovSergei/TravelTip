@@ -12,6 +12,7 @@
     font-family: cursive;
     font-size: 1.5rem;
     font-weight: bold;
+    letter-spacing: 0.05em;
     text-shadow: 2px 2px 1px black;
     color: var(--clr-Primary1)
 }
@@ -40,10 +41,4 @@
 
     background: var(--clr-Primary5);
     color: white;
-    cursor: pointer;
-    transition: opacity .2s;
-}
-
-.main-header .search-location button:hover {
-    opacity: 0.9;
 }

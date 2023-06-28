@@ -1,12 +1,10 @@
 .main-layout {
     display: grid;
-    grid-template-columns: 20px 1fr 1fr 20px;
     grid-template-columns:
         minmax(20px, 1fr) 
-        minmax(100px, 600px) 
-        minmax(100px, 600px) 
+        minmax(auto, 600px) 
+        minmax(auto, 600px) 
         minmax(20px, 1fr);
-    row-gap: 4em;
 }
 
 .main-layout > .full {
