@@ -29,14 +29,14 @@
     padding: 0.7em;
     border-top-left-radius: 0.5em;
     border-bottom-left-radius: 0.5em;
-    border: 0.1px solid black;
+    border: none;
 }
 
 .main-header .search-location .search-btn {
     padding: 0.7em;
     border-top-right-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
-    border: 0.1px solid black;
+    border: 1px solid black;
 
     background: var(--clr-Primary5);
     color: white;
