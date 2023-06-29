@@ -7,9 +7,9 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
-window.onMapClick = onMapClick
 window.onSearch = onSearch
 window.onCopyLink = onCopyLink
+
 
 function onInit() {
     onGetLocs()
@@ -28,6 +28,8 @@ function onInit() {
         .catch(error => {
             console.log('Error fetching weather data:', error)
         })
+
+    mapService.updateCurrentLocation()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -40,7 +42,8 @@ function getPosition() {
 
 function onAddMarker() {
     console.log('Adding a marker')
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
+    mapService.addMarker({ lat: mapService.getMapCenter().lat, lng: mapService.getMapCenter().lng })
+    mapService.updateCurrentLocation(mapService.getMapCenter().lat, mapService.getMapCenter().lng)
 }
 
 function onGetLocs() {
@@ -58,8 +61,9 @@ function onGetUserPos() {
     getPosition()
         .then(pos => {
             console.log('User position is:', pos.coords)
-            document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+            mapService.panTo(pos.coords.latitude, pos.coords.longitude)
+            mapService.addMarker({lat: pos.coords.latitude, lng: pos.coords.longitude})
+            mapService.updateCurrentLocation(pos.coords.latitude, pos.coords.longitude)
         })
         .catch(err => {
             console.log('err!!!', err)
@@ -68,23 +72,13 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map')
     mapService.panTo(35.6895, 139.6917)
-}
-
-function onMapClick(event) {
-    console.log(event)
-    const clickedLocation = {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng()
-    }
-
-    mapService.addMarker(clickedLocation)
+    mapService.updateCurrentLocation(35.6895, 139.6917)
 }
 
 function renderPlacesTable(locs) {
-    const tableBody = document.querySelector('.places-table-body');
+    const tableBody = document.querySelector('.places-table-body')
 
     tableBody.innerHTML = ''
-
     locs.forEach(loc => {
         const row = document.createElement('tr')
         row.innerHTML = `
@@ -97,33 +91,50 @@ function renderPlacesTable(locs) {
             </td>
         `
         tableBody.appendChild(row)
+        console.log(loc.id)
     })
+
     const goButtons = document.getElementsByClassName('btn-go')
-    // const deleteButtons = document.getElementsByClassName('btn-delete')
+    const deleteButtons = document.getElementsByClassName('btn-delete')
 
     for (let i = 0; i < goButtons.length; i++) {
-        goButtons[i].addEventListener('click', onGoButtonClick)
+        goButtons[i].addEventListener('click', onGo)
     }
 
-    // for (let i = 0; i < deleteButtons.length; i++) {
-    //     deleteButtons[i].addEventListener('click', onDeleteButtonClick)
-    // }
+    for (let i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener('click', onDelete)
+    }
 }
 
-function onGoButtonClick(event) {
-    console.log(event)
+function onGo(event) {
     const lat = event.target.dataset.lat
     const lng = event.target.dataset.lng
     mapService.panTo(lat, lng)
-    mapService.addMarker({ lat: lat, lng: lng })
     weatherService.fetch(lat, lng)
+        .then(weatherData => {
+            weatherService.update(weatherData)
+        })
+
+    mapService.updateCurrentLocation(lat, lng)
 
 }
 
+function onDelete(event) {
+    const placeId = event.target.dataset.id
+    locService.deletePlace(placeId)
+        .then(() => {
+            onGetLocs()
+        })
+        .catch(err => {
+            console.log('Error deleting place:', err)
+        })
+}
 
-function onSearch() {
+function onSearch(event) {
+    event.preventDefault()
     const address = document.querySelector('.search-input').value
-    mapService.onSearchLocation(address)
+    mapService.SearchLocation(address)
+
 }
 
 function onCopyLink() {
@@ -135,10 +146,11 @@ function onCopyLink() {
     const url = `https://strukovsergei.github.io/TravelTip/?${urlParams.toString()}`
 
     navigator.clipboard.writeText(url)
-      .then(() => {
-        console.log('Link copied to clipboard:', url)
-      })
-      .catch(err => {
-        console.log('Error copying link to clipboard:', err)
-      })
-  }
+        .then(() => {
+            console.log('Link copied to clipboard:', url)
+        })
+        .catch(err => {
+            console.log('Error copying link to clipboard:', err)
+        })
+}
+

@@ -4,8 +4,10 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
-    onSearchLocation,
-    getCurrentLocation
+    SearchLocation,
+    getCurrentLocation,
+    getMapCenter,
+    updateCurrentLocation
 }
 
 
@@ -29,6 +31,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 console.log(lat)
                 console.log(lng)
                 addMarker({ lat, lng })
+                updateCurrentLocation(lat, lng)
                 weatherService.fetch(lat, lng)
                     .then(weatherData => {
                         weatherService.update(weatherData)
@@ -78,7 +81,7 @@ function _connectGoogleApi() {
     })
 }
 
-function onSearchLocation(address) {
+function SearchLocation(address) {
     const geocoder = new google.maps.Geocoder()
     geocoder.geocode({ address }, (results, status) => {
         if (status === 'OK' && results.length > 0) {
@@ -86,6 +89,7 @@ function onSearchLocation(address) {
             const { lat, lng } = location
             mapService.panTo(lat(), lng())
             mapService.addMarker({ lat: lat(), lng: lng() })
+            updateCurrentLocation(lat(), lng())
             weatherService.fetch(lat(), lng())
                 .then(weatherData => {
                     weatherService.update(weatherData)
@@ -120,4 +124,47 @@ function getCurrentLocation() {
                 reject(err)
             })
     })
+}
+
+function getMapCenter() {
+    const center = gMap.getCenter()
+    const lat = center.lat()
+    const lng = center.lng()
+    console.log(lat)
+    console.log(lng)
+
+    return { lat, lng }
+}
+
+function updateCurrentLocation(lat = 32.0749831, lng = 34.9120554) {
+    const geocoder = new google.maps.Geocoder()
+    const latLng = new google.maps.LatLng(lat, lng)
+
+    geocoder.geocode({ 'location': latLng }, (results, status) => {
+        if (status === 'OK') {
+            if (results[0]) {
+                const addressComponents = results[0].address_components
+                let country = ''
+                let city = ''
+
+                for (let i = 0; i < addressComponents.length; i++) {
+                    const types = addressComponents[i].types
+
+                    if (types.includes('country')) {
+                        country = addressComponents[i].long_name
+                    }
+
+                    if (types.includes('locality') || types.includes('administrative_area_level_1')) {
+                        city = addressComponents[i].long_name
+                    }
+                }
+
+                const currentLocationElement = document.querySelector('.current-location')
+                currentLocationElement.textContent = `${country}, ${city}`
+            }
+        } else {
+            console.log('Geocoder failed due to: ' + status)
+        }
+    })
+    addMarker({ lat: parseFloat(lat), lng: parseFloat(lng) })
 }

@@ -12,17 +12,17 @@
 <body class="main-layout">
     <header class="main-header main-layout full">
         <div class="logo">Travel<span class="colored-txt">Tip</span></div>
-        <form class="search-location" onsubmit="onGoTo(event)">
+        <form class="search-location" onsubmit="onSearch(event)">
             <input type="text" class="search-input" placeholder="Enter location...">
-            <button onclick="onSearch()" class="search-btn"><i class="fa fa-search"></i></button>
+            <button onclick="onSearch(event)" class="search-btn"><i class="fa fa-search"></i></button>
         </form>
     </header>
     
     <section class="location-section main-layout full">
         <h2>Location: <span class="current-location"></span></h2>
         <div class="btns-location">
-            <button class="copy-location-button">Copy Location</button>
-            <button class="my-location-btn">My Location</button>
+            <button onclick="onCopyLink()" class="copy-location-button">Copy Location</button>
+            <button onclick="onGetUserPos()" class="my-location-btn">My Location</button>
         </div>
     </section>
 
@@ -57,10 +57,8 @@
                 </table>
             </section>
             <button onclick="onAddMarker()" class="btn-location btn-add-marker">Add Marker Speific Location</button>
-            <button onclick="onGetUserPos()" class="btn-location btn-user-pos">Get User Position</button>
             <button onclick="onGetLocs()" class="btn-location btn-get-locs">Get Locations</button>
             <button onclick="onPanTo()" class="btn-location btn-pan">Pan Map to Tokyo</button>
-            <button onclick="onCopyLink()" class="btn-location btn-pan">Copy Link</button>
         </section>
     
         <p>Locations:
