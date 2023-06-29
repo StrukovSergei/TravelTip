@@ -28,7 +28,7 @@
 
     <main class="main-content">
 
-        <div class="weather-container">
+        <section class="weather-container">
             <div class="weather-info">
                 Weather: <span class="weather-description"></span>
             </div>
@@ -38,35 +38,32 @@
             <div class="weather-info">
                 Humidity: <span class="humidity"></span>%
             </div>
-        </div>
+        </section>
     
         <div class="map" id="map"></div>
     
         <section class="locations-table">
-            <section class="locations-table">
-                <table class="places-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                        </tr>
-                    </thead>
-                    <tbody class="places-table-body">
-                    </tbody>
-                </table>
-            </section>
+            <table class="places-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                    </tr>
+                </thead>
+                <tbody class="places-table-body">
+                </tbody>
+            </table>
+        </section>
+
+        <section class="user-btns">
             <button onclick="onAddMarker()" class="btn-location btn-add-marker">Add Marker Speific Location</button>
             <button onclick="onGetLocs()" class="btn-location btn-get-locs">Get Locations</button>
             <button onclick="onPanTo()" class="btn-location btn-pan">Pan Map to Tokyo</button>
         </section>
-    
-        <p>Locations:
-        <pre class="locs"></pre>
-        </p>
+
+        <section class="your-locations flex center">Your locations</section>
     </main>
-
-
 
     <script type="module" src="js/app.controller.js"></script>
 </body>

@@ -1,9 +1,12 @@
 .location-section {
+    padding-block: 4em;
+    margin-block-end: 2em;
     background-color: var(--clr-Primary3);
 }
 
 .location-section h2 {
     grid-column: 2;
+    color: var(--clr-Primary1);
 }
 
 .location-section .btns-location{
